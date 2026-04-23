@@ -21,6 +21,9 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 void PlayerShip::Initialize(Level* pLevel, Vector2& startPosition)
 {
 	SetPosition(startPosition);
+	
+	// set the starting position for Reset()
+	m_startingPosition = startPosition;
 }
 
 void PlayerShip::HandleInput(const InputState& input)
@@ -129,4 +132,15 @@ Vector2 PlayerShip::GetHalfDimensions() const
 void PlayerShip::SetResponsiveness(const float responsiveness)
 {
 	m_responsiveness = Math::Clamp(0, 1, responsiveness);
+}
+
+void PlayerShip::Reset()
+{
+	// restores the hit points of player ship
+	Ship::Initialize();
+
+	// places player ship back at the starting position after being hit
+	SetPosition(m_startingPosition);
+	Activate();
+	
 }
