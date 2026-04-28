@@ -15,6 +15,12 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 
 	SetPosition(Game::GetScreenCenter() + Vector2::UNIT_Y * 300);
 
+	// initialize player ship starting position for Reset()
+	m_startingPosition = GetPosition();
+
+	// add heart image to represent player lives
+	// TODO: connect heart image to player lives (amount of lives = amount of hearts shown on screen)
+
 }
 
 

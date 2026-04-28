@@ -26,6 +26,9 @@ void PlayerCollidesWithEnemy(GameObject *pObject1, GameObject *pObject2)
 	EnemyShip *pEnemyShip = (EnemyShip *)((!m) ? pObject1 : pObject2);
 	pEnemyShip->Hit(std::numeric_limits<float>::max());	
 
+	// player ship loses life first before checking if game is over in if-else statement
+	pPlayerShip->LoseLife();
+
 	// if-else statement to determine if player ship loses a life (and resets) or if the game is over (returns to main menu)
 	if (pPlayerShip->GetLives() <= 0)
 	{
@@ -33,8 +36,7 @@ void PlayerCollidesWithEnemy(GameObject *pObject1, GameObject *pObject2)
 	}
 	else
 	{
-		// player ship loses a life when collides with an enemy ship and resets to starting position
-		pPlayerShip->LoseLife();
+		// player ship resets to starting position
 		pPlayerShip->Reset();
 	}
 }
