@@ -8,6 +8,9 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	SetResponsiveness(0.1);
 
 	m_pTexture = resourceManager.Load<Texture>("Textures\\PlayerShip.png");
+	
+	// add heart image to represent player lives
+	m_pLife = resourceManager.Load<Texture>("Textures\\Heart.png");
 
 	AudioSample* pAudio = resourceManager.Load<AudioSample>("Audio\\Effects\\Laser.wav");
 	pAudio->SetVolume(0.5f);
@@ -16,11 +19,8 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	SetPosition(Game::GetScreenCenter() + Vector2::UNIT_Y * 300);
 
 	// initialize player ship starting position for Reset()
+	// TODO: why include this when have it initialized in Initialize()?
 	m_startingPosition = GetPosition();
-
-	// add heart image to represent player lives
-	// TODO: connect heart image to player lives (amount of lives = amount of hearts shown on screen)
-
 }
 
 
@@ -29,6 +29,7 @@ void PlayerShip::Initialize(Level* pLevel, Vector2& startPosition)
 	SetPosition(startPosition);
 	
 	// set the starting position for Reset()
+	// TODO: do I need to include this?
 	m_startingPosition = startPosition;
 }
 
@@ -126,6 +127,13 @@ void PlayerShip::Draw(SpriteBatch& spriteBatch)
 	{
 		const float alpha = GetCurrentLevel()->GetAlpha();
 		spriteBatch.Draw(m_pTexture, GetPosition(), Color::WHITE * alpha, m_pTexture->GetCenter());
+	}
+
+	// TODO: connect heart image to player lives (amount of lives = amount of hearts shown on screen)
+	if (GetLives() > 0)
+	{
+		// TODO: fix this so the hearts are in lower left corner, spaced out
+		// spriteBatch.Draw(m_pLife, Vector2(20, 20), Color::WHITE, m_pLife->GetCenter());
 	}
 }
 

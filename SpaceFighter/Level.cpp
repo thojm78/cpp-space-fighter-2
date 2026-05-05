@@ -26,7 +26,7 @@ void PlayerCollidesWithEnemy(GameObject *pObject1, GameObject *pObject2)
 	EnemyShip *pEnemyShip = (EnemyShip *)((!m) ? pObject1 : pObject2);
 	pEnemyShip->Hit(std::numeric_limits<float>::max());	
 
-	// player ship loses life first before checking if game is over in if-else statement
+	// player ship loses one life first before checking if game is over in if-else statement
 	pPlayerShip->LoseLife();
 
 	// if-else statement to determine if player ship loses a life (and resets) or if the game is over (returns to main menu)
@@ -62,6 +62,9 @@ Level::Level()
 	Blaster *pBlaster = new Blaster("Main Blaster");
 	pBlaster->SetProjectilePool(&m_projectiles);
 	m_pPlayerShip->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
+
+	// TODO: attach heart object to player ship
+	// m_pPlayerShip->AttachItem(&m_heart, Vector2::UNIT_Y * 20);???
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -260,6 +263,10 @@ void Level::Draw(SpriteBatch& spriteBatch)
 		GameObject *pGameObject = (*m_gameObjectIt);
 		pGameObject->Draw(spriteBatch);
 	}
+
+	// draw lives in the lower left corner of screen 
+	// have to ensure that other objects cannot collide with heart/s
+	
 
 	spriteBatch.End();
 
