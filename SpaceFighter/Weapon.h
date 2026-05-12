@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "KatanaEngine.h"
@@ -21,18 +20,19 @@ public:
 	Weapon(const std::string& key, bool isAttachedToPlayer = true, bool isActive = true,
 		TriggerType triggerType = TriggerType::Primary)
 		: m_key(key), m_isAttachedToPlayer(isAttachedToPlayer), m_isActive(isActive),
-		m_triggerType(triggerType) { }
+		m_triggerType(triggerType) {
+	}
 
-	virtual ~Weapon() { }
+	virtual ~Weapon() {}
 
 	/** @brief Update the weapon.
 		@param pGameTime Timing values including time since last update. */
-	virtual void Update(const GameTime& gameTime) { };
+	virtual void Update(const GameTime& gameTime) {};
 
 	/** @brief Render the weapon.
 		@param spriteBatch A reference to the game's sprite batch, used for rendering.
 		@remark Generally, this is not used, but can be overridden by derived classes if you want to render the weapon. */
-	virtual void Draw(SpriteBatch& spriteBatch) { };
+	virtual void Draw(SpriteBatch& spriteBatch) {};
 
 	/** @brief Attempt to fire the weapon.
 		@param triggerType The type of trigger that fired the weapon.
@@ -48,7 +48,7 @@ public:
 	/** @brief Set the pool of projectiles that the weapon can fire.
 		@param pProjectiles A pointer to the projectile pool.
 		@see GetProjectile */
-	virtual void SetProjectilePool(std::vector<Projectile *> *pProjectiles) { m_pProjectiles = pProjectiles; }
+	virtual void SetProjectilePool(std::vector<Projectile*>* pProjectiles) { m_pProjectiles = pProjectiles; }
 
 	/** @brief Activate the weapon. */
 	virtual void Activate() { m_isActive = true; }
@@ -71,6 +71,10 @@ public:
 	/** @brief Determine if the weapon is attached to the player.
 		@return True if the weapon is attached to the player. */
 	virtual bool IsAttachedToPlayer() const { return m_isAttachedToPlayer; }
+
+	/** @brief Set whether the weapon should consider itself attached to the player.
+		@remark Used so levels or ships can toggle projectile allegiance. */
+	virtual void SetAttachedToPlayer(bool attached) { m_isAttachedToPlayer = attached; }
 
 	/** @brief Attach the weapon to a game object.
 		@param pAttachable A pointer to the attachable game object.
@@ -99,7 +103,7 @@ protected:
 	/** @brief Get a projectile from the pool.
 		@return A pointer to a projectile.
 		@remark This helps us avoid instantiating projectiles while the level is running. */
-	virtual Projectile *GetProjectile();
+	virtual Projectile* GetProjectile();
 
 
 private:
@@ -109,15 +113,14 @@ private:
 
 	std::string m_key;
 
-	GameObject *m_pGameObject = nullptr;
+	GameObject* m_pGameObject = nullptr;
 
 	Vector2 m_offset;
 
 	TriggerType m_triggerType = TriggerType::Primary;
 
-	std::vector<Projectile *> *m_pProjectiles = nullptr;
+	std::vector<Projectile*>* m_pProjectiles = nullptr;
 
 	AudioSample* m_pFireSound = nullptr;
 
 };
-
