@@ -89,7 +89,7 @@ private:
 	bool m_isConfinedToScreen = false;
 
 	Texture* m_pTexture = nullptr;
-	
+
 	// add life texture
 	Texture* m_pLife = nullptr;
 
