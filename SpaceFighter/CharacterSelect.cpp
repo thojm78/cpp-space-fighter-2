@@ -1,5 +1,8 @@
 #include "CharacterSelect.h"
 #include "GameplayScreen.h"
+#include "GeneRick.h"
+#include "CurackHaus.h"
+#include "SaiKo.h"
 
 
 CharacterSelectScreen::CharacterSelectScreen()
@@ -15,60 +18,101 @@ void CharacterSelectScreen::LoadContent(ResourceManager& resourceManager)
 
     // Font
     Font::SetLoadSize(24, true);
-    Font* pFont = resourceManager.Load<Font>("Fonts\\arial.ttf");
+    m_pFont = resourceManager.Load<Font>("Fonts\\arial.ttf");
 
-    // Define Characters
-    const int CharacterCount = 3;
-    std::string names[CharacterCount] = { "Gene Rick", "Curack Haus", "Sai Ko" };
-
-    SetDisplayCount(CharacterCount);
-
-    // FIX 1: Added 'int i = 0' (Your version had 'int = 0')
-    for (int i = 0; i < CharacterCount; i++)
-    {
-        MenuItem* pItem = new MenuItem(names[i]);
-        pItem->SetPosition(Vector2(Game::GetScreenCenter().X - 100, 200 + 60 * i));
-        pItem->SetFont(pFont);
-        pItem->SetColor(Color::BLUE);
-        pItem->SetSelected(i == 0);
-
-        // When character is selected, move to gameplay
-        pItem->SetOnSelect([this, i]() {
-            SetOnRemove([this, i]() {
-                AddScreen(new GameplayScreen());
-                });
-            Exit();
-            });
-
-        AddMenuItem(pItem);
-    } 
+    RefreshCharacterMenu(resourceManager);
 }
 
-void CharacterSelectScreen::Update(const GameTime& gameTime)
+void CharacterSelectScreen::RefreshCharacterMenu(ResourceManager& resourceManager)
 {
-    float alpha = GetAlpha();
-
-    for (MenuItem* pItem : GetMenuItems())
+	//Clear existing menu items
+auto& items = GetMenuItems();
+    for (MenuItem* pItem : items)
     {
-        pItem->SetAlpha(alpha);
-        bool isSelected = pItem->IsSelected();
-        pItem->SetColor(isSelected ? Color::YELLOW : Color::BLUE);
+        delete pItem; 
     }
+    items.clear();
 
-    MenuScreen::Update(gameTime);
+	//Load the portrait for the currently selected character
+    m_pPortraitTexture = resourceManager.Load<Texture>(m_portraitPaths[m_selectedCharacterIndex]);
+
+    //Navigation Buttons
+    float screenWidth = (float)Game::GetScreenWidth();
+
+    MenuItem* pBackItem = new MenuItem("Prev");
+    pBackItem->SetPosition(Vector2(screenWidth - 150, 50));
+    pBackItem->SetFont(m_pFont);
+    pBackItem->SetOnSelect([this, &resourceManager]()
+        {
+            m_selectedCharacterIndex = (m_selectedCharacterIndex - 1 + m_characterCount) % m_characterCount;
+            RefreshCharacterMenu(resourceManager);
+        });
+    AddMenuItem(pBackItem);
+
+	MenuItem* pNextItem = new MenuItem("Next");
+	pNextItem->SetPosition(Vector2(screenWidth - 150, 100));
+	pNextItem->SetFont(m_pFont);
+	pNextItem->SetOnSelect([this, &resourceManager]()
+		{
+			m_selectedCharacterIndex = (m_selectedCharacterIndex + 1) % m_characterCount;
+			RefreshCharacterMenu(resourceManager);
+		});
+	AddMenuItem(pNextItem);
+
+    //Selection Button
+	std::string names[3] = { "Gene Rick", "Curack Haus", "Sai Ko" };
+    MenuItem* pSelect = new MenuItem("Select  " + names[m_selectedCharacterIndex]);
+
+    //Position at the bottom center
+	pSelect->SetPosition(Vector2(Game::GetScreenCenter().X - 100, Game::GetScreenHeight() - 100));
+    pSelect->SetFont(m_pFont);
+    pSelect->SetOnSelect([this]() 
+        {
+        SetOnRemove([this]() {
+            AddScreen(new GameplayScreen());
+            });
+        Exit();
+        });
+    AddMenuItem(pSelect);
+
 }
 
 void CharacterSelectScreen::Draw(SpriteBatch& spriteBatch)
 {
     spriteBatch.Begin();
 
-    if (m_pBackgroundTexture)
-    {
-        spriteBatch.Draw(m_pBackgroundTexture, Vector2::ZERO, Color::WHITE * GetAlpha());
-    }
+	if (m_pPortraitTexture)
+	{
+        float scaleX = (float)Game::GetScreenWidth() / m_pPortraitTexture->GetWidth();
+		float scaleY = (float)Game::GetScreenHeight() / m_pPortraitTexture->GetHeight();
+        Vector2 scale(scaleX, scaleY);
+
+        spriteBatch.Draw(m_pPortraitTexture,Vector2::ZERO,Color::WHITE * GetAlpha(),Vector2::ZERO, scale,0.0f, 0.0f);
+	}
 
     MenuScreen::Draw(spriteBatch);
-
     spriteBatch.End();
+}
 
+void CharacterSelectScreen::Update(const GameTime& gameTime)
+{
+    float alpha = GetAlpha();
+
+    //Go through all items to update visual state
+    for (MenuItem* pItem : GetMenuItems())
+    {
+        pItem->SetAlpha(alpha);
+
+        //Check which is being hovered
+        if (pItem->IsSelected())
+        {
+            pItem->SetColor(Color::WHITE); //Hover Color
+        }
+        else
+        {
+            pItem->SetColor(Color::BLUE); //Default Color
+        }
+    }
+
+    MenuScreen::Update(gameTime);
 }
