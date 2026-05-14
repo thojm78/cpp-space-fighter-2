@@ -7,7 +7,7 @@ void Level02::LoadContent(ResourceManager& resourceManager)
 {
 	// Setup enemy ships
 	Texture* pTexture = resourceManager.Load<Texture>("Textures\\BioEnemyShip.png");
-	Texture* BpTexture = resourceManager.Load<Texture>("Textures\\Ravager.webp");
+	Texture* BpTexture = resourceManager.Load<Texture>("Textures\\BioEnemyBoss.png");
 
 	const int COUNT = 22;
 	const int BCOUNT = 3;
