@@ -26,19 +26,7 @@ void PlayerCollidesWithEnemy(GameObject* pObject1, GameObject* pObject2)
 	EnemyShip *pEnemyShip = (EnemyShip *)((!m) ? pObject1 : pObject2);
 	pEnemyShip->Hit(std::numeric_limits<float>::max());	
 
-	// player ship loses one life first before checking if game is over in if-else statement
-	pPlayerShip->LoseLife();
-
-	// if-else statement to determine if player ship loses a life (and resets) or if the game is over (returns to main menu)
-	if (pPlayerShip->GetLives() <= 0)
-	{
-		pPlayerShip->Hit(std::numeric_limits<float>::max());
-	}
-	else
-	{
-		// player ship resets to starting position
-		pPlayerShip->Reset();
-	}
+	pPlayerShip->Hit(1);
 }
 
 void EnemyProjectileHitsPlayer(GameObject* pObject1, GameObject* pObject2)
@@ -48,20 +36,7 @@ void EnemyProjectileHitsPlayer(GameObject* pObject1, GameObject* pObject2)
 	Projectile* pProjectile = (Projectile*)((!firstIsPlayer) ? pObject1 : pObject2);
 
 	pProjectile->Deactivate();
-
-	// player ship loses one life first before checking if game is over in if-else statement
-	pPlayerShip->LoseLife();
-
-	// if-else statement to determine if player ship loses a life (and resets) or if the game is over (returns to main menu)
-	if (pPlayerShip->GetLives() <= 0)
-	{
-		pPlayerShip->Hit(std::numeric_limits<float>::max());
-	}
-	else
-	{
-		// player ship resets to starting position
-		pPlayerShip->Reset();
-	}
+	pPlayerShip->Hit(1);
 }
 
 

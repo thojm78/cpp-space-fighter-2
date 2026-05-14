@@ -55,11 +55,6 @@ public:
 		@param isConfined True to confine the player ship to the screen, false otherwise. */
 	virtual void ConfineToScreen(const bool isConfined = true) { m_isConfinedToScreen = isConfined; }
 
-	// determine the state of the player ship's lives and if they lost a life
-	virtual void SetLives(const int lives) { m_lives = lives; }
-	virtual int GetLives() const { return m_lives; }
-	virtual void LoseLife() { m_lives--; }
-
 	// after player ship is hit, player ship is reset to the starting position
 	virtual void Reset();
 
@@ -92,9 +87,6 @@ private:
 
 	// add life texture
 	Texture* m_pLife = nullptr;
-
-	// player always starts with 3 lives 
-	int m_lives = 3;
 
 	// store starting position so player ship can be reset after being hit
 	Vector2 m_startingPosition;
