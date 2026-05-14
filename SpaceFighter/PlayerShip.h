@@ -90,6 +90,9 @@ private:
 
 	Texture* m_pTexture = nullptr;
 
+	// add life texture
+	Texture* m_pLife = nullptr;
+
 	// player always starts with 3 lives 
 	int m_lives = 3;
 

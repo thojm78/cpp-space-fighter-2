@@ -22,10 +22,23 @@ void PlayerShootsEnemy(GameObject* pObject1, GameObject* pObject2)
 void PlayerCollidesWithEnemy(GameObject* pObject1, GameObject* pObject2)
 {
 	bool m = pObject1->HasMask(CollisionType::Player);
-	PlayerShip* pPlayerShip = (PlayerShip*)((m) ? pObject1 : pObject2);
-	EnemyShip* pEnemyShip = (EnemyShip*)((!m) ? pObject1 : pObject2);
-	pPlayerShip->Hit(std::numeric_limits<float>::max());
-	pEnemyShip->Hit(std::numeric_limits<float>::max());
+	PlayerShip *pPlayerShip = (PlayerShip *)((m) ? pObject1 : pObject2);
+	EnemyShip *pEnemyShip = (EnemyShip *)((!m) ? pObject1 : pObject2);
+	pEnemyShip->Hit(std::numeric_limits<float>::max());	
+
+	// player ship loses one life first before checking if game is over in if-else statement
+	pPlayerShip->LoseLife();
+
+	// if-else statement to determine if player ship loses a life (and resets) or if the game is over (returns to main menu)
+	if (pPlayerShip->GetLives() <= 0)
+	{
+		pPlayerShip->Hit(std::numeric_limits<float>::max());
+	}
+	else
+	{
+		// player ship resets to starting position
+		pPlayerShip->Reset();
+	}
 }
 
 void EnemyProjectileHitsPlayer(GameObject* pObject1, GameObject* pObject2)
@@ -260,6 +273,10 @@ void Level::Draw(SpriteBatch& spriteBatch)
 		GameObject* pGameObject = (*m_gameObjectIt);
 		pGameObject->Draw(spriteBatch);
 	}
+
+	// draw lives in the lower left corner of screen 
+	// have to ensure that other objects cannot collide with heart/s
+	
 
 	spriteBatch.End();
 

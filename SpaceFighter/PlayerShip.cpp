@@ -8,6 +8,9 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	SetResponsiveness(0.1);
 
 	m_pTexture = resourceManager.Load<Texture>("Textures\\PlayerShip.png");
+	
+	// add heart image to represent player lives
+	m_pLife = resourceManager.Load<Texture>("Textures\\HeartLife.png");	
 
 	AudioSample* pAudio = resourceManager.Load<AudioSample>("Audio\\Effects\\Laser.wav");
 	pAudio->SetVolume(0.5f);
@@ -15,6 +18,8 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 
 	SetPosition(Game::GetScreenCenter() + Vector2::UNIT_Y * 300);
 
+	// initialize player ship starting position for Reset()
+	m_startingPosition = GetPosition();
 }
 
 
@@ -117,6 +122,12 @@ void PlayerShip::Draw(SpriteBatch& spriteBatch)
 	{
 		const float alpha = GetCurrentLevel()->GetAlpha();
 		spriteBatch.Draw(m_pTexture, GetPosition(), Color::WHITE * alpha, m_pTexture->GetCenter());
+
+		for (int i = 0; i < GetLives(); i++)
+		{
+			int xPosition = 1475 + (i * (m_pLife->GetWidth() + 10)); // 10 pixels of spacing between hearts
+			spriteBatch.Draw(m_pLife, Vector2(xPosition, 20), Color::WHITE, m_pLife->GetCenter());
+		}
 	}
 }
 
@@ -129,4 +140,15 @@ Vector2 PlayerShip::GetHalfDimensions() const
 void PlayerShip::SetResponsiveness(const float responsiveness)
 {
 	m_responsiveness = Math::Clamp(0, 1, responsiveness);
+}
+
+void PlayerShip::Reset()
+{
+	// restores the hit points of player ship
+	Ship::Initialize();
+
+	// places player ship back at the starting position after being hit
+	SetPosition(m_startingPosition);
+	Activate();
+	
 }
