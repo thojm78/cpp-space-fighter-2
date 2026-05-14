@@ -36,7 +36,7 @@ auto& items = GetMenuItems();
 	//Load the portrait for the currently selected character
     m_pPortraitTexture = resourceManager.Load<Texture>(m_portraitPaths[m_selectedCharacterIndex]);
 
-    //Navigation Buttons
+    //Navigation Buttons located at top-right
     float screenWidth = (float)Game::GetScreenWidth();
 
     MenuItem* pBackItem = new MenuItem("Prev");
@@ -59,11 +59,9 @@ auto& items = GetMenuItems();
 		});
 	AddMenuItem(pNextItem);
 
-    //Selection Button
+    //Names for each character, Selection Button positioned at bottom-center
 	std::string names[3] = { "Gene Rick", "Curack Haus", "Sai Ko" };
     MenuItem* pSelect = new MenuItem("Select  " + names[m_selectedCharacterIndex]);
-
-    //Position at the bottom center
 	pSelect->SetPosition(Vector2(Game::GetScreenCenter().X - 100, Game::GetScreenHeight() - 100));
     pSelect->SetFont(m_pFont);
     pSelect->SetOnSelect([this]()
@@ -81,6 +79,7 @@ void CharacterSelectScreen::Draw(SpriteBatch& spriteBatch)
 {
     spriteBatch.Begin();
 
+    //Draw selected character portrait
 	if (m_pPortraitTexture)
 	{
         float scaleX = (float)Game::GetScreenWidth() / m_pPortraitTexture->GetWidth();
@@ -90,7 +89,7 @@ void CharacterSelectScreen::Draw(SpriteBatch& spriteBatch)
         spriteBatch.Draw(m_pPortraitTexture,Vector2::ZERO,Color::WHITE * GetAlpha(),Vector2::ZERO, scale,0.0f, 0.0f);
 	}
 
-    MenuScreen::Draw(spriteBatch);
+    MenuScreen::Draw(spriteBatch); //Draw Meu items on top of portrait
     spriteBatch.End();
 }
 

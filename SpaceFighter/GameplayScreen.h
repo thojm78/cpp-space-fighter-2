@@ -2,6 +2,7 @@
 #pragma once
 
 #include "KatanaEngine.h"
+#include "GameplayScreen.h"
 
 using namespace KatanaEngine;
 
@@ -16,7 +17,6 @@ class GameplayScreen : public Screen
 {
 
 public:
-
 	/** @brief Instantiate a gameplay screen object.
 		@param levelIndex The index of the level to load. */
 	GameplayScreen(const int levelIndex, int characterIndex);
@@ -47,10 +47,11 @@ private:
 	int m_levelIndex = 0;
 	int m_characterIndex = 0;
 
-	Level *m_pLevel = nullptr;
 
+	Level *m_pLevel = nullptr;
 	ResourceManager *m_pResourceManager = nullptr;
 
-
+	MenuItem* m_pShieldAbilityItem = nullptr;
+	Texture* m_pShieldReadyTexture = nullptr;
 
 };

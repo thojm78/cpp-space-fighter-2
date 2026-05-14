@@ -19,8 +19,10 @@ public:
 	/** @brief Instantiate a level object. */
 	Level();
 	virtual ~Level();
-
+	std::vector<GameObject*>& GetGameObjects() { return m_gameObjects; }
 	void SetPlayer(PlayerShip* pPlayer) { m_pPlayerShip = pPlayer; }
+
+	PlayerShip* GetPlayer() { return m_pPlayerShip; }
 
 	std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
 

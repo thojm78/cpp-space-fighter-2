@@ -3,19 +3,45 @@
 #include "EnemyShip.h"
 #include "Blaster.h"
 #include "GameplayScreen.h"
+#include "GeneRick.h"
+#include "CurackHaus.h"
+#include "SaiKo.h"
 
 std::vector<Explosion *> Level::s_explosions;
 
 // Collision Callback Functions
 
 /** brief Callback function for when the player shoots an enemy. */
-void PlayerShootsEnemy(GameObject *pObject1, GameObject *pObject2)
-{
+void PlayerShootsEnemy(GameObject* pObject1, GameObject* pObject2) {
 	bool m = pObject1->HasMask(CollisionType::Enemy);
-	EnemyShip *pEnemyShip = (EnemyShip *)((m) ? pObject1 : pObject2);
-	Projectile *pPlayerProjectile = (Projectile *)((!m) ? pObject1 : pObject2);
+	EnemyShip* pEnemyShip = (EnemyShip*)((m) ? pObject1 : pObject2);
+	Projectile* pPlayerProjectile = (Projectile*)((!m) ? pObject1 : pObject2);
+
 	pEnemyShip->Hit(pPlayerProjectile->GetDamage());
 	pPlayerProjectile->Deactivate();
+
+	// Check if the ship died from this hit, track kills
+	if (pEnemyShip->GetHitPoints() <= 0) {
+		Level* pLevel = (Level*)GameObject::GetCurrentLevel();
+		PlayerShip* pPlayer = pLevel->GetPlayer(); // Get the base player
+
+		if (pPlayer) {
+			GeneRick* pGeneRick = dynamic_cast<GeneRick*>(pPlayer);
+			if (pGeneRick) {
+				pGeneRick->IncrementKillCount();
+			}
+
+			CurackHaus* pCurackHaus = dynamic_cast<CurackHaus*>(pPlayer);
+			if (pCurackHaus) {
+				pCurackHaus->IncrementKillCount();
+			}
+
+			SaiKo* pSaiKo = dynamic_cast<SaiKo*>(pPlayer);
+			if (pSaiKo) {
+				pSaiKo->IncrementKillCount();
+			}
+		}
+	}
 }
 
 /** brief Callback function for when the player collides with an enemy. */
