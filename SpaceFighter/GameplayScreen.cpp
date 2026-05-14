@@ -107,7 +107,7 @@ void GameplayScreen::Update(const GameTime& gameTime)
 }
 
 void GameplayScreen::Draw(SpriteBatch& spriteBatch) {
-	/*spriteBatch.Begin();
+	spriteBatch.Begin();
 	m_pLevel->Draw(spriteBatch);
 	GeneRick* pGeneRick = dynamic_cast<GeneRick*>(m_pLevel->GetPlayer());
 
@@ -117,5 +117,5 @@ void GameplayScreen::Draw(SpriteBatch& spriteBatch) {
 			//spriteBatch.Draw(m_pShieldReadyTexture, pos, Color::WHITE, Vector2::ZERO); Doesn't work for some reason
 		}
 	}
-	spriteBatch.End();*/
+	spriteBatch.End();
 }
