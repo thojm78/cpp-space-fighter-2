@@ -20,6 +20,10 @@ public:
 	Level();
 	virtual ~Level();
 
+	void SetPlayer(PlayerShip* pPlayer) { m_pPlayerShip = pPlayer; }
+
+	std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
+
 	/** @brief Load the content for the level, including game objects and resources.
 		@param resourceManager A reference to the game's resource manager,
 		used for loading and managing game assets (resources). */

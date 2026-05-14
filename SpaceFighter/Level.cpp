@@ -44,11 +44,8 @@ Level::Level()
 	
 	GameObject::SetCurrentLevel(this);
 
-	// Setup player ship
-	m_pPlayerShip = new PlayerShip();
-	Blaster *pBlaster = new Blaster("Main Blaster");
-	pBlaster->SetProjectilePool(&m_projectiles);
-	m_pPlayerShip->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
+	//m_pPlayerShip->Activate();
+	//AddGameObject(m_pPlayerShip);
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -57,8 +54,7 @@ Level::Level()
 		AddGameObject(pProjectile);
 	}
 	
-	m_pPlayerShip->Activate();
-	AddGameObject(m_pPlayerShip);
+
 
 	// Setup collision types
 	CollisionManager *pC = GetCollisionManager();
@@ -87,7 +83,7 @@ Level::~Level()
 
 void Level::LoadContent(ResourceManager& resourceManager)
 {
-	m_pPlayerShip->LoadContent(resourceManager);
+	//m_pPlayerShip->LoadContent(resourceManager);
 
 	// Setup explosions if they haven't been already
 	Explosion* pExplosion;
@@ -109,9 +105,15 @@ void Level::LoadContent(ResourceManager& resourceManager)
 
 void Level::HandleInput(const InputState& input)
 {
-	if (IsScreenTransitioning()) return;
+	if (IsScreenTransitioning() || m_pPlayerShip == nullptr)
+	{
+		return;
+	}
 
-	m_pPlayerShip->HandleInput(input);
+	if (m_pPlayerShip != nullptr)
+	{
+		m_pPlayerShip->HandleInput(input);
+	}
 }
 
 
@@ -138,8 +140,13 @@ void Level::Update(const GameTime& gameTime)
 	}
 	
 	for (Explosion *pExplosion : s_explosions) pExplosion->Update(gameTime);
-
-	if (!m_pPlayerShip->IsActive()) GetGameplayScreen()->Exit();
+	if (m_pPlayerShip != nullptr)
+	{
+		if (!m_pPlayerShip->IsActive())
+		{
+			GetGameplayScreen()->Exit();
+		}
+	}
 }
 
 

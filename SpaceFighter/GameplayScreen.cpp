@@ -3,6 +3,7 @@
 #include "MainMenuScreen.h"
 #include "Level.h"
 #include "Level01.h"
+#include "Blaster.h"
 #include "GeneRick.h"
 #include "CurackHaus.h"
 #include "SaiKo.h"
@@ -20,6 +21,9 @@ GameplayScreen::GameplayScreen(int levelIndex, int characterIndex)
 
 void GameplayScreen::LoadContent(ResourceManager& resourceManager)
 {
+	m_pResourceManager = &resourceManager;
+	LoadLevel(m_levelIndex);
+
 	PlayerShip* pPlayer = nullptr;
 
 	switch (m_characterIndex)
@@ -30,14 +34,17 @@ void GameplayScreen::LoadContent(ResourceManager& resourceManager)
 	default: pPlayer = new PlayerShip(); break;
 	}
 
-	if (pPlayer)
+	if (pPlayer && m_pLevel)
 	{
 		pPlayer->LoadContent(resourceManager);
-		m_pLevel->AddGameObject(pPlayer);
-	}
+		Blaster* pBlaster = new Blaster("Main Blaster");
+		pBlaster->SetProjectilePool(m_pLevel->GetProjectilePool());
+		pPlayer->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
 
-	m_pResourceManager = &resourceManager;
-	LoadLevel(m_levelIndex);
+		m_pLevel->SetPlayer(pPlayer);
+		m_pLevel->AddGameObject(pPlayer);
+		pPlayer->Activate();
+	}
 }
 
 void GameplayScreen::LoadLevel(const int levelIndex)
