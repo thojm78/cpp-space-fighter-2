@@ -63,9 +63,6 @@ Level::Level()
 	pBlaster->SetProjectilePool(&m_projectiles);
 	m_pPlayerShip->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
 
-	// TODO: attach heart object to player ship
-	// m_pPlayerShip->AttachItem(&m_heart, Vector2::UNIT_Y * 20);???
-
 	for (int i = 0; i < 100; i++)
 	{
 		Projectile *pProjectile = new Projectile();

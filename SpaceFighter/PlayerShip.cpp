@@ -19,7 +19,6 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	SetPosition(Game::GetScreenCenter() + Vector2::UNIT_Y * 300);
 
 	// initialize player ship starting position for Reset()
-	// TODO: why include this when have it initialized in Initialize()?
 	m_startingPosition = GetPosition();
 }
 
@@ -27,10 +26,6 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 void PlayerShip::Initialize(Level* pLevel, Vector2& startPosition)
 {
 	SetPosition(startPosition);
-	
-	// set the starting position for Reset()
-	// TODO: do I need to include this?
-	m_startingPosition = startPosition;
 }
 
 void PlayerShip::HandleInput(const InputState& input)
