@@ -66,15 +66,15 @@ auto& items = GetMenuItems();
     //Position at the bottom center
 	pSelect->SetPosition(Vector2(Game::GetScreenCenter().X - 100, Game::GetScreenHeight() - 100));
     pSelect->SetFont(m_pFont);
-    pSelect->SetOnSelect([this]() 
+    pSelect->SetOnSelect([this]()
         {
-        SetOnRemove([this]() {
-            AddScreen(new GameplayScreen());
-            });
-        Exit();
+            SetOnRemove([this]() {
+                // Pass 0 for the first level, and your selection for the character
+                AddScreen(new GameplayScreen(0, m_selectedCharacterIndex));
+                });
+            Exit();
         });
     AddMenuItem(pSelect);
-
 }
 
 void CharacterSelectScreen::Draw(SpriteBatch& spriteBatch)

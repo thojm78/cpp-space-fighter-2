@@ -3,9 +3,12 @@
 #include "MainMenuScreen.h"
 #include "Level.h"
 #include "Level01.h"
+#include "GeneRick.h"
+#include "CurackHaus.h"
+#include "SaiKo.h"
 
-GameplayScreen::GameplayScreen(const int levelIndex)
-	: m_levelIndex(levelIndex)
+GameplayScreen::GameplayScreen(int levelIndex, int characterIndex)
+	: m_levelIndex(levelIndex), m_characterIndex(characterIndex)
 {
 	SetTransitionInTime(1);
 	SetTransitionOutTime(3);
@@ -17,6 +20,22 @@ GameplayScreen::GameplayScreen(const int levelIndex)
 
 void GameplayScreen::LoadContent(ResourceManager& resourceManager)
 {
+	PlayerShip* pPlayer = nullptr;
+
+	switch (m_characterIndex)
+	{
+	case 0: pPlayer = new GeneRick(); break;
+	case 1: pPlayer = new CurackHaus(); break;
+	case 2: pPlayer = new SaiKo(); break;
+	default: pPlayer = new PlayerShip(); break;
+	}
+
+	if (pPlayer)
+	{
+		pPlayer->LoadContent(resourceManager);
+		m_pLevel->AddGameObject(pPlayer);
+	}
+
 	m_pResourceManager = &resourceManager;
 	LoadLevel(m_levelIndex);
 }
