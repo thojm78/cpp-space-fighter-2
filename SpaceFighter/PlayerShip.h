@@ -78,6 +78,9 @@ protected:
 		@return Returns the desired direction of the player ship. */
 	virtual Vector2 GetDesiredDirection() const { return m_desiredDirection; }
 
+	//Allow other classes to modify
+	Texture* m_pTexture = nullptr;
+
 
 private:
 
@@ -88,7 +91,7 @@ private:
 
 	bool m_isConfinedToScreen = false;
 
-	Texture* m_pTexture = nullptr;
+
 
 	// add life texture
 	Texture* m_pLife = nullptr;

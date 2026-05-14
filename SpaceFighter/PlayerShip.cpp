@@ -13,8 +13,13 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	m_pLife = resourceManager.Load<Texture>("Textures\\HeartLife.png");	
 
 	AudioSample* pAudio = resourceManager.Load<AudioSample>("Audio\\Effects\\Laser.wav");
-	pAudio->SetVolume(0.5f);
-	GetWeapon("Main Blaster")->SetFireSound(pAudio);
+	Weapon* pWeapon = GetWeapon("Main Blaster");
+
+	if (pWeapon != nullptr)
+	{
+		pAudio->SetVolume(0.5f);
+		pWeapon->SetFireSound(pAudio);
+	}
 
 	SetPosition(Game::GetScreenCenter() + Vector2::UNIT_Y * 300);
 

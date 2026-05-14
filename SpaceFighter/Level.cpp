@@ -2,6 +2,9 @@
 #include "EnemyShip.h"
 #include "Blaster.h"
 #include "GameplayScreen.h"
+#include "GeneRick.h"
+#include "CurackHaus.h"
+#include "SaiKo.h"
 
 std::vector<Explosion*> Level::s_explosions;
 
@@ -15,7 +18,29 @@ void PlayerShootsEnemy(GameObject* pObject1, GameObject* pObject2)
 	Projectile* pPlayerProjectile = (Projectile*)((!m) ? pObject1 : pObject2);
 	pEnemyShip->Hit(pPlayerProjectile->GetDamage());
 	pPlayerProjectile->Deactivate();
-	std::cout << "Ship Destroyed!";//also here
+
+	// Check if the ship died from this hit, track kills
+	if (pEnemyShip->GetHitPoints() <= 0) {
+		Level* pLevel = (Level*)GameObject::GetCurrentLevel();
+		PlayerShip* pPlayer = pLevel->GetPlayer(); // Get the base player
+
+		if (pPlayer) {
+			GeneRick* pGeneRick = dynamic_cast<GeneRick*>(pPlayer);
+			if (pGeneRick) {
+				pGeneRick->IncrementKillCount();
+			}
+
+			CurackHaus* pCurackHaus = dynamic_cast<CurackHaus*>(pPlayer);
+			if (pCurackHaus) {
+				pCurackHaus->IncrementKillCount();
+			}
+
+			SaiKo* pSaiKo = dynamic_cast<SaiKo*>(pPlayer);
+			if (pSaiKo) {
+				pSaiKo->IncrementKillCount();
+			}
+		}
+	}
 }
 
 /** brief Callback function for when the player collides with an enemy. */
@@ -126,7 +151,7 @@ Level::~Level()
 
 void Level::LoadContent(ResourceManager& resourceManager)
 {
-	m_pPlayerShip->LoadContent(resourceManager);
+	//m_pPlayerShip->LoadContent(resourceManager);
 
 	// Setup explosions if they haven't been already
 	Explosion* pExplosion;
@@ -148,9 +173,15 @@ void Level::LoadContent(ResourceManager& resourceManager)
 
 void Level::HandleInput(const InputState& input)
 {
-	if (IsScreenTransitioning()) return;
+	if (IsScreenTransitioning() || m_pPlayerShip == nullptr)
+	{
+		return;
+	}
 
-	m_pPlayerShip->HandleInput(input);
+	if (m_pPlayerShip != nullptr)
+	{
+		m_pPlayerShip->HandleInput(input);
+	}
 }
 
 
@@ -175,10 +206,15 @@ void Level::Update(const GameTime& gameTime)
 			CheckCollisions(m_pSectors[i]);
 		}
 	}
-
-	for (Explosion* pExplosion : s_explosions) pExplosion->Update(gameTime);
-
-	if (!m_pPlayerShip->IsActive()) GetGameplayScreen()->Exit();
+	
+	for (Explosion *pExplosion : s_explosions) pExplosion->Update(gameTime);
+	if (m_pPlayerShip != nullptr)
+	{
+		if (!m_pPlayerShip->IsActive())
+		{
+			GetGameplayScreen()->Exit();
+		}
+	}
 }
 
 

@@ -19,6 +19,12 @@ public:
 	/** @brief Instantiate a level object. */
 	Level();
 	virtual ~Level();
+	std::vector<GameObject*>& GetGameObjects() { return m_gameObjects; }
+	void SetPlayer(PlayerShip* pPlayer) { m_pPlayerShip = pPlayer; }
+
+	PlayerShip* GetPlayer() { return m_pPlayerShip; }
+
+	std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
 
 	/** @brief Load the content for the level, including game objects and resources.
 		@param resourceManager A reference to the game's resource manager,

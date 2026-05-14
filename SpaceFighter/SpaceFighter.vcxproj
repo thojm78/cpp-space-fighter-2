@@ -172,13 +172,16 @@
   <ItemGroup>
     <ClCompile Include="BioEnemyShip.cpp" />
     <ClCompile Include="Blaster.cpp" />
+    <ClCompile Include="CharacterSelect.cpp" />
     <ClCompile Include="BossShip.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="CollisionType.cpp" />
+    <ClCompile Include="CurackHaus.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameplayScreen.cpp" />
+    <ClCompile Include="GeneRick.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Level01.cpp" />
     <ClCompile Include="Level02.cpp" />
@@ -186,6 +189,7 @@
     <ClCompile Include="MainMenuScreen.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="SaiKo.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpaceFighter.cpp" />
     <ClCompile Include="TriggerType.cpp" />
@@ -199,19 +203,21 @@
   <ItemGroup>
     <ClInclude Include="BioEnemyShip.h" />
     <ClInclude Include="Blaster.h" />
-    <ClInclude Include="BossShip.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionType.h" />
+    <ClInclude Include="CurackHaus.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameplayScreen.h" />
+    <ClInclude Include="GeneRick.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Level01.h" />
     <ClInclude Include="Level02.h" />
     <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="SaiKo.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SpaceFighter.h" />
     <ClInclude Include="TriggerType.h" />

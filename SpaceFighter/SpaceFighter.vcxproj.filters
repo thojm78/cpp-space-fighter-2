@@ -36,6 +36,9 @@
     <Filter Include="Source Files\Game Objects\Misc">
       <UniqueIdentifier>{02ce19ac-33ef-46f4-b36c-95e29c76d41f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Characters">
+      <UniqueIdentifier>{938ea09c-53fd-422e-9c04-933415995716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">
@@ -104,6 +107,18 @@
     <ClCompile Include="BossShip.cpp">
       <Filter>Source Files\Game Objects\Ships</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterSelect.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneRick.cpp">
+      <Filter>Source Files\Core\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="CurackHaus.cpp">
+      <Filter>Source Files\Core\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SaiKo.cpp">
+      <Filter>Source Files\Core\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainMenuScreen.h">
@@ -159,6 +174,18 @@
     </ClInclude>
     <ClInclude Include="Explosion.h">
       <Filter>Source Files\Game Objects\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelect.h">
+      <Filter>Source Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneRick.h">
+      <Filter>Source Files\Core\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CurackHaus.h">
+      <Filter>Source Files\Core\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SaiKo.h">
+      <Filter>Source Files\Core\Characters</Filter>
     </ClInclude>
     <ClInclude Include="BossShip.h">
       <Filter>Source Files\Game Objects\Ships</Filter>

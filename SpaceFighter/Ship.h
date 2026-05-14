@@ -67,6 +67,14 @@ public:
 
 	virtual IAttachment* GetAttachment(const int index);
 
+	/** @brief Gets the current hit points of the ship.
+	@return Returns the current hit points of the ship. */
+	virtual float GetHitPoints() const { return m_hitPoints; }
+
+	/** @brief Gets the max hit points of the ship.
+		@return Returns the max hit points of the ship. */
+	virtual float GetMaxHitPoints() const { return m_maxHitPoints; }
+
 
 protected:
 
@@ -86,14 +94,7 @@ protected:
 		return dynamic_cast<Weapon*>(m_attachments[key]);
 	}
 
-	/** @brief Gets the current hit points of the ship.
-		@return Returns the current hit points of the ship. */
-	virtual float GetHitPoints() const { return m_hitPoints; }
-
-	/** @brief Gets the max hit points of the ship.
-		@return Returns the max hit points of the ship. */
-	virtual float GetMaxHitPoints() const { return m_maxHitPoints; }
-
+	float m_speed = 300; // pixels per second
 
 private:
 
