@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "KatanaEngine.h"
@@ -12,11 +11,11 @@ public:
 
 	/** @brief Instantiate a projectile object. */
 	Projectile();
-	virtual ~Projectile() { }
+	virtual ~Projectile() {}
 
 	/** @brief Set the texture that will be used to render the projectile.
 		@param pTexture A pointer to the texture. */
-	static void SetTexture(Texture *pTexture) { s_pTexture = pTexture; }
+	static void SetTexture(Texture* pTexture) { s_pTexture = pTexture; }
 
 	/** @brief Update the projectile.
 		@param pGameTime Timing values including time since last update. */
@@ -29,7 +28,7 @@ public:
 	/** @brief Activate the projectile.
 		@param position The position to activate the projectile at.
 		@param wasShotByPlayer A flag to determine if the projectile was fired by the player. */
-	virtual void Activate(const Vector2 &position, bool wasShotByPlayer = true);
+	virtual void Activate(const Vector2& position, bool wasShotByPlayer = true);
 
 	/** @brief Get the amount of damage the projectile will deal.
 		@return The amount of damage the projectile will deal. */
@@ -44,6 +43,11 @@ public:
 	virtual CollisionType GetCollisionType() const;
 
 
+	//to make the enemy projectiles go down instead of up
+	virtual void SetDirection(const Vector2 direction) { m_direction = direction; }
+
+
+
 protected:
 
 	/** @brief Set the speed of the projectile.
@@ -56,15 +60,15 @@ protected:
 
 	/** @brief Set the direction of the projectile.
 		@param direction The direction of the projectile. */
-	virtual void SetDirection(const Vector2 direction) { m_direction = direction; }
+		//virtual void SetDirection(const Vector2 direction) { m_direction = direction; }
 
-	/** @brief Get the speed of the projectile.
-		@return The speed of the projectile. */
+		/** @brief Get the speed of the projectile.
+			@return The speed of the projectile. */
 	virtual float GetSpeed() const { return m_speed; }
 
 	/** @brief Get the direction of the projectile.
 		@return The direction of the projectile. */
-	virtual Vector2 &GetDirection() { return m_direction; }
+	virtual Vector2& GetDirection() { return m_direction; }
 
 	/** @brief Determine if the projectile was fired by the player.
 		@return True if the projectile was fired by the player. */
@@ -77,7 +81,7 @@ protected:
 
 private:
 
-	static Texture *s_pTexture;
+	static Texture* s_pTexture;
 
 	float m_speed = 500; // pixels per second
 	float m_damage = 1;
@@ -86,4 +90,3 @@ private:
 
 	bool m_wasShotByPlayer = true;
 };
-

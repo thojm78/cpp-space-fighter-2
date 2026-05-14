@@ -1,15 +1,24 @@
-
-
 #include "Level02.h"
 #include "BioEnemyShip.h"
+#include "BossShip.h"
 
 
 void Level02::LoadContent(ResourceManager& resourceManager)
 {
 	// Setup enemy ships
 	Texture* pTexture = resourceManager.Load<Texture>("Textures\\BioEnemyShip.png");
+	Texture* BpTexture = resourceManager.Load<Texture>("Textures\\Ravager.webp");
 
 	const int COUNT = 22;
+	const int BCOUNT = 3;
+
+	double BxPositions[BCOUNT] = {
+		0.50, 0.75, 0.25
+	};
+	double Bdelays[BCOUNT] = {
+		0.25, 5.00, 8.00
+	};
+
 
 	double xPositions[COUNT] =
 	{
@@ -29,8 +38,10 @@ void Level02::LoadContent(ResourceManager& resourceManager)
 		3.5, 0.3, 0.3, 0.3, 0.3, 0.3
 	};
 
-	float delay = 3.0; // start delay
+	float delay = 3.0f; // start delay
+	float Bdelay = 0.1f;
 	Vector2 position;
+	Vector2 Bposition;
 
 	for (int i = 0; i < COUNT; i++)
 	{
@@ -42,8 +53,30 @@ void Level02::LoadContent(ResourceManager& resourceManager)
 		pEnemy->SetCurrentLevel(this);
 		pEnemy->Initialize(position, (float)delay);
 		AddGameObject(pEnemy);
+
+
 	}
+	if (!BpTexture)
+	{
+		std::cout << "Failed to load boss texture." << std::endl;
+	}
+	else
+	{
+		for (int j = 0; j < BCOUNT; ++j)
+		{
+			Bdelay += static_cast<float>(Bdelays[j]);
+			Vector2 Bposition;
+			Bposition.Set(static_cast<float>(BxPositions[j]) * Game::GetScreenWidth(), -BpTexture->GetCenter().Y);
+
+
+			BossShip* pBoss = BossShip::Create(BpTexture, this, Bposition, Bdelay, GetProjectilePool());
+			AddGameObject(pBoss);
+			std::cout << "Added Boss at pos(" << Bposition.X << "," << Bposition.Y << ") delay=" << Bdelay << " index=" << pBoss->GetIndex() << std::endl;
+		}
+	}
+
+
+	SetBackground(resourceManager.Load<Texture>("Textures\\SpaceBackground01.png"));
 
 	Level::LoadContent(resourceManager);
 }
-

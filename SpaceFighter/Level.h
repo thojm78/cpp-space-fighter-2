@@ -26,7 +26,7 @@ public:
 	virtual void LoadContent(ResourceManager& resourceManager);
 
 	/** @brief Unload the content for the level. */
-	virtual void UnloadContent() { };
+	virtual void UnloadContent() {};
 
 	/** @brief Handle input for the level.
 		@param input The current state of all player input devices. */
@@ -116,6 +116,8 @@ protected:
 		@return A pointer to the collision manager. */
 	virtual CollisionManager* GetCollisionManager() { return m_pCollisionManager; }
 
+
+	virtual std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
 	/** @brief Get a pointer to the gameplay screen.
 		@return A pointer to the gameplay screen. */
 	virtual GameplayScreen* GetGameplayScreen() const { return m_pGameplayScreen; }
@@ -130,7 +132,7 @@ protected:
 
 private:
 
-	static std::vector<Explosion *> s_explosions;
+	static std::vector<Explosion*> s_explosions;
 	//std::vector<Explosion *>::iterator m_explosionIt;
 
 	CollisionManager* m_pCollisionManager = nullptr;

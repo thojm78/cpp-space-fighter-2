@@ -1,7 +1,6 @@
-
 #include "Blaster.h"
 
-void Blaster::Update(const GameTime & gameTime)
+void Blaster::Update(const GameTime& gameTime)
 {
 	if (m_cooldown > 0) m_cooldown -= gameTime.GetElapsedTime();
 }
@@ -17,6 +16,16 @@ void Blaster::Fire(TriggerType triggerType)
 
 	AudioSample* pAudio = GetFireSound();
 	if (pAudio) pAudio->Play();
+
+	if (IsAttachedToPlayer())
+	{
+		pProjectile->SetDirection(-Vector2::UNIT_Y);
+	}
+	else
+	{
+		pProjectile->SetDirection(Vector2::UNIT_Y);
+	}
+
 
 	pProjectile->Activate(GetPosition(), IsAttachedToPlayer());
 	m_cooldown = m_cooldownSeconds;
