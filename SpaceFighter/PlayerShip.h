@@ -61,7 +61,7 @@ public:
 	virtual void LoseLife() { m_lives--; }
 
 	// after player ship is hit, player ship is reset to the starting position
-	virtual void Reset();
+	//virtual void Reset();
 
 
 protected:
