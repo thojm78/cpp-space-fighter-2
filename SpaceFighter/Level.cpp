@@ -106,7 +106,7 @@ Level::Level()
 	GameObject::SetCurrentLevel(this);
 
 	// Setup player ship
-	m_pPlayerShip = new PlayerShip();
+	/*m_pPlayerShip = new PlayerShip();
 	Blaster* pBlaster = new Blaster("Main Blaster");
 	pBlaster->SetProjectilePool(&m_projectiles);
 	m_pPlayerShip->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
@@ -119,7 +119,7 @@ Level::Level()
 	}
 
 	m_pPlayerShip->Activate();
-	AddGameObject(m_pPlayerShip);
+	AddGameObject(m_pPlayerShip);*/
 
 	// Setup collision types
 	CollisionManager* pC = GetCollisionManager();

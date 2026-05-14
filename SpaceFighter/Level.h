@@ -24,8 +24,6 @@ public:
 
 	PlayerShip* GetPlayer() { return m_pPlayerShip; }
 
-	std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
-
 	/** @brief Load the content for the level, including game objects and resources.
 		@param resourceManager A reference to the game's resource manager,
 		used for loading and managing game assets (resources). */
@@ -116,14 +114,14 @@ public:
 	}
 
 
+	virtual std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
+
+
 protected:
 
 	/** @brief Get a pointer to the collision manager.
 		@return A pointer to the collision manager. */
 	virtual CollisionManager* GetCollisionManager() { return m_pCollisionManager; }
-
-
-	virtual std::vector<Projectile*>* GetProjectilePool() { return &m_projectiles; }
 	/** @brief Get a pointer to the gameplay screen.
 		@return A pointer to the gameplay screen. */
 	virtual GameplayScreen* GetGameplayScreen() const { return m_pGameplayScreen; }

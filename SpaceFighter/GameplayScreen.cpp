@@ -4,6 +4,7 @@
 #include "MenuItem.h"
 #include "Level.h"
 #include "Level01.h"
+#include "Level02.h"
 #include "Blaster.h"
 #include "GeneRick.h"
 #include "CurackHaus.h"

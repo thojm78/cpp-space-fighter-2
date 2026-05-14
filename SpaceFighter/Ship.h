@@ -94,11 +94,9 @@ protected:
 		return dynamic_cast<Weapon*>(m_attachments[key]);
 	}
 
-	float m_speed = 300; // pixels per second
+	float m_speed = 300; 
 
 private:
-
-	float m_speed = 300; 
 
 	float m_maxHitPoints = 3;
 	float m_hitPoints = m_maxHitPoints;
