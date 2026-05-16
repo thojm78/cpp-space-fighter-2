@@ -94,6 +94,7 @@ protected:
 		@return Returns the max hit points of the ship. */
 	virtual float GetMaxHitPoints() const { return m_maxHitPoints; }
 
+	// set hit points so that ship can lose lives and game ends when reaches to 0
 	virtual void SetHitPoints(const float hitPoints) { m_hitPoints = hitPoints; }
 
 private:

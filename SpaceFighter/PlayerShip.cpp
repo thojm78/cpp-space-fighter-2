@@ -126,6 +126,7 @@ void PlayerShip::Draw(SpriteBatch& spriteBatch)
 		const float alpha = GetCurrentLevel()->GetAlpha();
 		spriteBatch.Draw(m_pTexture, GetPosition(), Color::WHITE * alpha, m_pTexture->GetCenter());
 
+		// for (int i = 0; i < GetLives(); i++)
 		for (int i = 0; i < GetHitPoints(); i++)
 		{
 			int xPosition = 1475 + (i * (m_pLife->GetWidth() + 10)); // 10 pixels of spacing between hearts
