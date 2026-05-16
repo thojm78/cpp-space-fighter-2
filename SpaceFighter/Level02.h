@@ -9,7 +9,7 @@ class Level02 : public Level
 public:
 
 	/** @brief Instantiate a level object. */
-	Level02() { }
+	Level02(int characterIndex) : Level(characterIndex) {}
 	virtual ~Level02() { }
 
 	/** @brief Load the content for the level, including game objects and resources.

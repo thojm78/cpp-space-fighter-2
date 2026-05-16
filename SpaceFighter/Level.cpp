@@ -90,7 +90,7 @@ void EnemyProjectileHitsPlayer(GameObject* pObject1, GameObject* pObject2)
 }
 
 
-Level::Level()
+Level::Level(int characterIndex)
 {
 	m_sectorSize.X = 64;
 	m_sectorSize.Y = 64;
@@ -106,7 +106,15 @@ Level::Level()
 	GameObject::SetCurrentLevel(this);
 
 	// Setup player ship
-	/*m_pPlayerShip = new PlayerShip();
+	// ONE SOURCE OF TRUTH: Create the specific player ship here
+	switch (characterIndex)
+	{
+	case 0: m_pPlayerShip = new GeneRick(); break;
+	case 1: m_pPlayerShip = new CurackHaus(); break;
+	case 2: m_pPlayerShip = new SaiKo(); break;
+	default: m_pPlayerShip = new PlayerShip(); break;
+	}
+
 	Blaster* pBlaster = new Blaster("Main Blaster");
 	pBlaster->SetProjectilePool(&m_projectiles);
 	m_pPlayerShip->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
@@ -119,7 +127,7 @@ Level::Level()
 	}
 
 	m_pPlayerShip->Activate();
-	AddGameObject(m_pPlayerShip);*/
+	AddGameObject(m_pPlayerShip);
 
 	// Setup collision types
 	CollisionManager* pC = GetCollisionManager();

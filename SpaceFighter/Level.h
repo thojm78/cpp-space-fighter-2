@@ -17,7 +17,7 @@ class Level
 public:
 
 	/** @brief Instantiate a level object. */
-	Level();
+	Level(int characterIndex);
 	virtual ~Level();
 	std::vector<GameObject*>& GetGameObjects() { return m_gameObjects; }
 	void SetPlayer(PlayerShip* pPlayer) { m_pPlayerShip = pPlayer; }

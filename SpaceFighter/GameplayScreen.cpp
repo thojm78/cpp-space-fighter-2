@@ -26,28 +26,12 @@ void GameplayScreen::LoadContent(ResourceManager& resourceManager)
 	m_pResourceManager = &resourceManager;
 	LoadLevel(m_levelIndex);
 
-	PlayerShip* pPlayer = nullptr;
-
 	//Create selected player on characters choice
-	switch (m_characterIndex)
-	{
-	case 0: pPlayer = new GeneRick(); break;
-	case 1: pPlayer = new CurackHaus(); break;
-	case 2: pPlayer = new SaiKo(); break;
-	default: pPlayer = new PlayerShip(); break;
-	}
 
-	if (pPlayer && m_pLevel)
+	if (m_pLevel && m_pLevel->GetPlayer())
 	{
 		//Set up level and player
-		pPlayer->LoadContent(resourceManager);
-		Blaster* pBlaster = new Blaster("Main Blaster");
-		pBlaster->SetProjectilePool(m_pLevel->GetProjectilePool());
-		pPlayer->AttachItem(pBlaster, Vector2::UNIT_Y * -20);
-
-		m_pLevel->SetPlayer(pPlayer);
-		m_pLevel->AddGameObject(pPlayer);
-		pPlayer->Activate();
+		m_pLevel->GetPlayer()->LoadContent(resourceManager);
 	}
 
 	//m_pShieldReadyTexture = resourceManager.Load<Texture>("Textures\\AbilityReady.png");
@@ -60,7 +44,7 @@ void GameplayScreen::LoadLevel(const int levelIndex)
 
 	switch (levelIndex)
 	{
-	case 0: m_pLevel = new Level02(); break;
+	case 0: m_pLevel = new Level02(m_characterIndex); break;
 	}
 
 	m_pLevel->SetGameplayScreen(this);
